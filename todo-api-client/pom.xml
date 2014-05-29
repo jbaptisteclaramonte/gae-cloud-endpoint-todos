@@ -11,8 +11,8 @@
 
         <dependency>
             <groupId>com.appspot.todo_endpoint</groupId>
-            <artifactId>todo</artifactId>
-            <version>v1-1.18.0-rc-SNAPSHOT</version>
+            <artifactId>todos</artifactId>
+            <version>v2-1.18.0-rc-SNAPSHOT</version>
         </dependency>
 
         <dependency>

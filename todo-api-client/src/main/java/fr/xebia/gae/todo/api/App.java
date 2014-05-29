@@ -1,7 +1,7 @@
 package fr.xebia.gae.todo.api;
 
-import com.appspot.todo_endpoint.todo.Todo;
-import com.appspot.todo_endpoint.todo.model.TodoCollection;
+import com.appspot.todo_endpoint.todos.Todos;
+import com.appspot.todo_endpoint.todos.model.*;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -15,11 +15,21 @@ public class App
         HttpTransport httpTransport = new NetHttpTransport();
         JsonFactory jsonFactory = new JacksonFactory();
 
+        Todos.Builder builder = new Todos.Builder(httpTransport, jsonFactory, null);
+        builder.setRootUrl("https://todo-endpoint.appspot.com/_ah/api");
+        Todos todosApi = builder.build();
 
-        Todo.Builder builder = new Todo.Builder(httpTransport, jsonFactory, null);
-        builder.setRootUrl("http://localhost:8080/_ah/api/");
-        Todo todoService = builder.build();
-        TodoCollection todoCollection = todoService.list().execute();
+        Todo newTodo = new Todo();
+        newTodo.setTitle("hello");
+        todosApi.create(newTodo);
+
+        newTodo = new Todo();
+        newTodo.setTitle("world");
+        todosApi.create(newTodo);
+
+        TodoCollection todoCollection = todosApi.list().execute();
         System.out.println(todoCollection.getItems());
+
+
     }
 }
