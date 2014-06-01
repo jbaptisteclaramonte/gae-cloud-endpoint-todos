@@ -70,5 +70,12 @@
 		<script src="js/services/todoStorage.js"></script>
 		<script src="js/directives/todoFocus.js"></script>
 		<script src="js/directives/todoEscape.js"></script>
+        <script>
+            var init = function() {
+                // sera intercepté par angularjs
+                window.init();
+            }
+        </script>
+        <script src="https://apis.google.com/js/client.js?onload=init"></script>
 	</body>
 </html>

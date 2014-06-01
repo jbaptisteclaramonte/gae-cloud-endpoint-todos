@@ -6,13 +6,39 @@
  * - exposes the model to the template and provides event handlers
  */
 angular.module('todomvc')
-	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, todoStorage) {
+	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $window, $filter, todoStorage) {
 		'use strict';
 
 		var todos = $scope.todos = todoStorage.get();
 
 		$scope.newTodo = '';
 		$scope.editedTodo = null;
+
+        /**
+         * Ajout pour fonctionner avec Google Cloud Endpoint
+         * Fonction interceptant l'appel à window.init() effectué dans index.html
+         */
+        $window.init= function() {
+            console.log("$window.init called");
+            $scope.$apply($scope.load_gapi_todo_lib);
+        };
+
+        /**
+         * Charge l'api todos
+         */
+        $scope.load_gapi_todo_lib = function() {
+            console.log("load_todo_lib called");
+
+            var rootApi = 'http://localhost:8080/_ah/api';
+
+            gapi.client.load('todos', 'v2', function() {
+                console.log("todos api loaded");
+                gapi.client.todos.list().execute(function(resp) {
+                    console.log(resp);
+                });
+                console.log("todos api sucessfully called");
+            }, rootApi);
+        };
 
 		$scope.$watch('todos', function (newValue, oldValue) {
 			$scope.remainingCount = $filter('filter')(todos, { completed: false }).length;
