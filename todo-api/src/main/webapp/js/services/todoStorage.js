@@ -10,12 +10,44 @@ angular.module('todomvc')
 		var STORAGE_ID = 'todos-angularjs';
 
 		return {
-			get: function () {
-				return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
-			},
 
-			put: function (todos) {
-				localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
-			}
+            isBackEndReady: false,
+
+            list: function (callback) {
+                if (!this.isBackEndReady) {
+                    console.log("todos api is not ready");
+                    return;
+                }
+                console.log("getting todos list");
+                gapi.client.todos.list().execute(callback);
+            },
+
+            create: function (todo, callback) {
+                if (!this.isBackEndReady) {
+                    console.log("todos api is not ready");
+                    return;
+                }
+                console.log("create :" + todo);
+                gapi.client.todos.create(todo).execute(callback);
+            },
+
+            update: function (todo, callback) {
+                if (!this.isBackEndReady) {
+                    console.log("todos api is not ready");
+                    return;
+                }
+                console.log("update :" + todo);
+                gapi.client.todos.update(todo).execute(callback);
+            },
+
+            remove: function (todo, callback) {
+                if (!this.isBackEndReady) {
+                    console.log("todos api is not ready");
+                    return;
+                }
+                console.log("remove :" + todo);
+                gapi.client.todos.remove({"id": todo.id}).execute(callback);
+            }
+
 		};
 	});
