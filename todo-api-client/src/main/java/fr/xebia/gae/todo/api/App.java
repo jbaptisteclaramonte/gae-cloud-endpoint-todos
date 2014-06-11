@@ -21,15 +21,23 @@ public class App
 
         Todo newTodo = new Todo();
         newTodo.setTitle("hello");
-        todosApi.create(newTodo);
+        todosApi.create(newTodo).execute();
 
         newTodo = new Todo();
         newTodo.setTitle("world");
-        todosApi.create(newTodo);
+        todosApi.create(newTodo).execute();
 
         TodoCollection todoCollection = todosApi.list().execute();
-        System.out.println(todoCollection.getItems());
-
-
+        for (Todo todo : todoCollection.getItems()) {
+            System.out.println(todo.getTitle() + "(" + todo.getId() + ")");
+            if (todo.getTitle().equals("hello")) {
+                todosApi.remove(todo.getId());
+                System.out.println("=> deleted");
+            }
+            if (todo.getTitle().equals("world")) {
+                todosApi.remove(todo.getId()).execute();
+                System.out.println("=> deleted");
+            }
+        }
     }
 }

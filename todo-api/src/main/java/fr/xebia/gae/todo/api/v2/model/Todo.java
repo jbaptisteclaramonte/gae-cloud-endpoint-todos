@@ -7,7 +7,7 @@ import com.googlecode.objectify.annotation.Id;
 public class Todo {
 
     @Id
-    private Long id;
+    private Long id;  // @Id sur Long => si null un identifiant unique sera auto généré lors d'une insertion
     private String title;
     private boolean completed;
 
