@@ -31,7 +31,7 @@ public class TodoRepository {
     }
 
     public Collection<Todo> findTodos() {
-        List<Todo> todos = ofy().consistency(ReadPolicy.Consistency.STRONG).load().type(Todo.class).list();
+        List<Todo> todos = ofy().load().type(Todo.class).list();
         return todos;
     }
 
