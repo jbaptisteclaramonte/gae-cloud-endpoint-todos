@@ -42,7 +42,7 @@ angular.module('todomvc')
         $scope.load_gapi_todo_lib = function() {
             console.log("load_todo_lib called");
 
-            var rootApi = 'http://localhost:8080/_ah/api';
+            var rootApi = $window.location.origin + '/_ah/api';
 
             gapi.client.load('todos', 'v2', function() {
                 console.log("todos api loaded");
